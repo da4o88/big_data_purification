@@ -24,3 +24,7 @@ body {
   margin-right: auto;
   text-align: center;
 }
+
+#content {
+    margin-top: 45px;
+}
