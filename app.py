@@ -5,8 +5,6 @@ from flask_paginate import Pagination, get_page_args
 
 app = Flask(__name__)
 
-ROWS_PER_PAGE = 10
-
 
 @app.route('/')
 def home():  # put application's code here
@@ -16,21 +14,17 @@ def home():  # put application's code here
 
 @app.route('/raw-data')
 def show_raw_data():
-    # new_companies = []
-    # companies = get_raw_data()
-    #
-    # for c in companies:
-    #     company = {
-    #         "id": c['id'],
-    #         "name": c['name'],
-    #         "country_iso": c['country_iso'],
-    #         "city": c['city'],
-    #         "nace": c['nace'],
-    #         "website": c['website']
-    #     }
-    #     new_companies.append(company)
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    total = len(total_companies)
+    pagination_companies = get_total_companies(offset=offset, per_page=per_page)
+    pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap5')
 
-    return render_template("raw_data.html", companies=companies)
+    return render_template("raw_data.html",
+                           pagination_companies=pagination_companies,
+                           page=page,
+                           per_page=per_page,
+                           pagination=pagination,
+                           )
 
 
 @app.route('/show-data')
@@ -69,7 +63,12 @@ def get_companies():
     return new_companies
 
 
+def get_total_companies(offset=0, per_page=10):
+    return total_companies[offset: offset + per_page]
+
+
 companies = get_companies()
+total_companies = companies
 
 if __name__ == '__main__':
     app.run(debug=True)

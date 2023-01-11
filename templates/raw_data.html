@@ -5,7 +5,9 @@
             <h1>Raw Data</h1>
             <button>Clean Data</button>
         </div>
-
+        <div class="container">
+            {{ pagination.links }}
+        <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered">
 
               <thead>
@@ -19,9 +21,10 @@
                 </tr>
               </thead>
               <tbody class="table-group-divider">
-              {% for company in companies %}
+
+              {% for company in pagination_companies %}
                 <tr>
-                  <th scope="row">{{ loop.index }}</th>
+                  <th scope="row">{{ loop.index + (page - 1) * per_page }}</th>
                   <td>{{ company['name'] }}</td>
                   <td>{{ company['country_iso'] }}</td>
                   <td>{{ company['city'] }}</td>
@@ -31,6 +34,8 @@
               </tbody>
             {% endfor %}
         </table>
-
+        </div>
+        {{ pagination.links }}
+        </div>
     </div>
 {% endblock %}
