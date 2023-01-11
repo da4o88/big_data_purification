@@ -26,5 +26,6 @@ body {
 }
 
 #content {
-    margin-top: 45px;
+    /*margin-top: 45px;*/
+    margin: 45px 10px 10px 10px;
 }

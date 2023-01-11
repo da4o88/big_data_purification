@@ -21,7 +21,7 @@
               <tbody class="table-group-divider">
               {% for company in companies %}
                 <tr>
-                  <th scope="row">{{ companies.index(company) + 1 }}</th>
+                  <th scope="row">{{ loop.index }}</th>
                   <td>{{ company['name'] }}</td>
                   <td>{{ company['country_iso'] }}</td>
                   <td>{{ company['city'] }}</td>
@@ -30,6 +30,7 @@
                 </tr>
               </tbody>
             {% endfor %}
-            </table>
+        </table>
+
     </div>
 {% endblock %}
