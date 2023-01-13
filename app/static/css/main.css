@@ -29,3 +29,7 @@ body {
     /*margin-top: 45px;*/
     margin: 45px 10px 40px 10px;
 }
+
+div button {
+    display: inline-block;
+}
