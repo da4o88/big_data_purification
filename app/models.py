@@ -1,13 +1,13 @@
-# from app import db
+import mongoengine as me
 
 
-# class Company(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(255))
-#     country_iso = db.Column(db.String(255))
-#     city = db.Column(db.String(255), nullable=True)
-#     nace = db.Column(db.Integer)
-#     website = db.Column(db.String(255), nullable=True)
-#
-#     def __repr__(self):
-#         return self.name
+class Company(me.Document):
+    # id = me.IntField()
+    name = me.StringField(required=True)
+    country_iso = me.StringField(null=True)
+    city = me.StringField(null=True)
+    nace = me.IntField(null=True)
+    website = me.StringField(null=True)
+
+    def __repr__(self):
+        return self.name

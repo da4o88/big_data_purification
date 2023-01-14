@@ -1,4 +1,7 @@
 from .services import get_db_connection
+import json
+from bson.objectid import ObjectId
+from .models import Company
 
 # Get data from SQLite Database
 
@@ -29,3 +32,24 @@ def get_companies():
 
 def get_total_companies(companies, offset=0, per_page=10):
     return companies[offset: offset + per_page]
+
+
+# Add data to MongoDB
+
+def add_data():
+    company = Company()
+    company.name = "Lost in Translation"
+    company.city = "New Somewhere"
+    company.country_iso = 'MKD'
+
+    company.save()
+
+def show_company_data():
+    output = []
+    companies = Company.objects
+    print(companies)
+
+    for comp in companies:
+        output.append(comp)
+
+    return output
