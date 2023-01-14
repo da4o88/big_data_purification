@@ -44,10 +44,10 @@ def add_data():
 
     company.save()
 
+
 def show_company_data():
     output = []
     companies = Company.objects
-    print(companies)
 
     for comp in companies:
         output.append(comp)

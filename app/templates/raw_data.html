@@ -4,16 +4,20 @@
         <div>
             <h1>Raw Data</h1>
             <form action="" method="POST">
-{#                <input type="submit" value="Load Raw Data" class="btn btn-info" name="btn-load">#}
-{#                {% if submitted %}#}
-                <input type="submit" value="Migrate Data" class="btn btn-success" name="btn-migrate">
-{#                {% endif %}#}
+                <input type="submit" value="Migrate Data" class="btn btn-success" name="btn-migrate"
+                       data-bs-toggle="modal" data-bs-target="#exampleModal">
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Launch demo modal
+                </button>
             </form>
+
+
 
         </div>
         <br/>
         <div class="container">
-{#            {% if submitted %}#}
 
             {{ pagination.links }}
                 <div class="table-responsive">
@@ -44,13 +48,11 @@
                     {% endfor %}
                 </table>
                 </div>
-        {{ pagination.links }}
-{#        {% else %}#}
-{#            <div class="d-flex justify-content-center">#}
-{#                <p>Load Your Data First!!!</p>#}
-{#                {{message}}#}
-{#            </div>#}
-{#        {% endif %}#}
+            {{ pagination.links }}
         </div>
     </div>
+
+    <!-- Pop Up Modal Window -->
+    {% include 'modal.html' %}
+
 {% endblock %}

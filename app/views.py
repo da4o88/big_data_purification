@@ -4,6 +4,7 @@ from .handlers import get_companies, get_total_companies, get_raw_data, add_data
 from .models import Company
 from app import app
 
+
 # Create routes for app
 
 
@@ -11,6 +12,12 @@ from app import app
 def home():  # put application's code here
 
     return render_template("home.html")
+
+
+# @app.route('/modal')
+# def modal():  # put application's code here
+#
+#     return render_template("modal.html")
 
 
 @app.route('/show-data', methods=["GET"])
@@ -38,9 +45,14 @@ def show_data():
 
 @app.route('/raw-data', methods=["POST", "GET"])
 def show_raw_data():
+
+    # if request.method == "POST" and request.form.get("btn-migrate"):
+    #     add_data()
+
     if request.method == "POST" and request.form.get("btn-migrate"):
         add_data()
-        return redirect('/show-data')
+        return redirect('show-data')
+
 
     # Data from Database
     companies = get_raw_data()
