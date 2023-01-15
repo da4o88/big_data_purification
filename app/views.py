@@ -57,13 +57,16 @@ def show_data():
 
 @app.route('/raw-data', methods=["POST", "GET"])
 def show_raw_data():
-
-    # if request.method == "POST" and request.form.get("btn-migrate"):
-    #     add_data()
-
+    btn_migrate_flag = False
     if request.method == "POST" and request.form.get("btn-migrate"):
         add_data()
+        btn_migrate_flag = True
         return redirect('show-data')
+
+    # Working just fine
+    # if request.method == "POST" and request.form.get("btn-migrate"):
+    #     add_data()
+    #     return redirect('show-data')
 
 
     # Data from Database
@@ -86,4 +89,8 @@ def show_raw_data():
                            page=page,
                            per_page=per_page,
                            pagination=pagination,
+                           btn_migrate_flag=btn_migrate_flag,
                            )
+
+
+
