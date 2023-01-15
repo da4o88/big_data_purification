@@ -37,6 +37,15 @@ def get_total_companies(companies, offset=0, per_page=10):
 # <-- Work With MongoDB -->
 # Add data to MongoDB
 
+def get_and_import_data():
+    conn = get_db_connection()
+
+    # Get number of rows in table
+    count = conn.execute('SELECT COUNT(*) FROM companies').fetchone()[0]
+    print(count)
+
+
+
 def add_data():
     company = Company()
     company.name = "Lost in Translation"

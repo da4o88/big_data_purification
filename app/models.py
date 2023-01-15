@@ -2,7 +2,7 @@ import mongoengine as me
 
 
 class Company(me.Document):
-    # id = me.IntField()
+    # id = me.IntField(required=True)
     name = me.StringField(required=True)
     country_iso = me.StringField(null=True)
     city = me.StringField(null=True)
