@@ -4,10 +4,10 @@ import mongoengine as me
 class Company(me.Document):
     # id = me.IntField(required=True)
     name = me.StringField(required=True)
-    country_iso = me.StringField(null=True)
-    city = me.StringField(null=True)
-    nace = me.IntField(null=True)
-    website = me.StringField(null=True)
+    country_iso = me.StringField()
+    city = me.StringField()
+    nace = me.IntField()
+    website = me.StringField()
 
     def __repr__(self):
         return self.name

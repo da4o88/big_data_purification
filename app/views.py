@@ -57,9 +57,15 @@ def show_data():
 
 @app.route('/raw-data', methods=["POST", "GET"])
 def show_raw_data():
+    # Data from Database
+    companies = get_raw_data()
+
+    # companies = get_companies()  # list
+    total = len(companies)  # length of list
     btn_migrate_flag = False
+
     if request.method == "POST" and request.form.get("btn-migrate"):
-        add_data()
+        add_data(companies)
         btn_migrate_flag = True
         return redirect('show-data')
 
@@ -68,14 +74,8 @@ def show_raw_data():
     #     add_data()
     #     return redirect('show-data')
 
-
-    # Data from Database
-    companies = get_raw_data()
-
-    # companies = get_companies()  # list
-    total = len(companies)  # length of list
-
     # Set Pagination
+
     page = request.args.get(get_page_parameter(), type=int, default=1)
     per_page = 10
     offset = (page - 1) * per_page
@@ -91,6 +91,3 @@ def show_raw_data():
                            pagination=pagination,
                            btn_migrate_flag=btn_migrate_flag,
                            )
-
-
-
