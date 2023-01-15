@@ -1,6 +1,7 @@
 from flask import render_template, redirect, request, jsonify, url_for, Response
 from flask_paginate import Pagination, get_page_args, get_page_parameter
-from .handlers import get_companies, get_total_companies, get_raw_data, add_data, show_company_data
+# from .handlers import get_companies, get_total_companies, get_raw_data, add_data, show_company_data
+from .handlers import *
 from .models import Company
 from app import app
 
@@ -20,10 +21,20 @@ def home():  # put application's code here
 #     return render_template("modal.html")
 
 
-@app.route('/show-data', methods=["GET"])
+@app.route('/show-data', methods=["GET", "POST"])
 def show_data():
     companies = show_company_data()
     records = len(Company.objects)
+    records_flag = False
+    # Check if DB is empty
+    if request.method == "GET" and records == 0:
+        records_flag = True
+        return render_template('show_data.html', records_flag=records_flag)
+
+    if request.method == "POST" and request.form.get("btn-delete-all-records"):
+        delete_all_data()
+        records_flag = True
+        return render_template('show_data.html', records_flag=records_flag)
 
     # Set Pagination
     page = request.args.get(get_page_parameter(), type=int, default=1)
@@ -35,6 +46,7 @@ def show_data():
     pagination = Pagination(page=page, per_page=per_page, total=records, css_framework='bootstrap5')
 
     return render_template("show_data.html",
+                           records=records,
                            companies=pagination_companies,
                            pagination=pagination,
                            page=page,

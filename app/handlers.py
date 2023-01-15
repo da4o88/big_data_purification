@@ -34,6 +34,7 @@ def get_total_companies(companies, offset=0, per_page=10):
     return companies[offset: offset + per_page]
 
 
+# <-- Work With MongoDB -->
 # Add data to MongoDB
 
 def add_data():
@@ -53,3 +54,12 @@ def show_company_data():
         output.append(comp)
 
     return output
+
+# Delete Data in DB
+
+
+def delete_all_data():
+    companies = Company.objects
+
+    for company in companies:
+        company.delete()

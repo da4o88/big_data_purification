@@ -1,7 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Cleaned Data</h1>
-<br/>
+    <br>
+
+    {% if records_flag %}
+        <div class="card">
+          <div class="card-header">
+            Message
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Migrate Your Data</h5>
+            <p class="card-text">You Don't Have Records In Your Database !!!</p>
+            <a href="{{ url_for('show_raw_data') }}" class="btn btn-primary">Go To Migrate Data Page</a>
+          </div>
+        </div>
+
+    {% else %}
+            <form action="" method="post">
+                <input type="submit" value="Delete All Records" class="btn btn-danger" name="btn-delete-all-records">
+            </form>
+        <br/>
         <div class="container">
             {{ pagination.links }}
                 <div class="table-responsive">
@@ -34,4 +52,5 @@
                 </div>
             {{ pagination.links }}
         </div>
+    {% endif %}
 {% endblock %}
