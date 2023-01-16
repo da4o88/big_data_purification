@@ -9,9 +9,10 @@ from app import app
 # Create routes for app
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def home():  # put application's code here
-
+    if request.method == "POST" and request.form.get("btn-home-migrate"):
+        return redirect('raw-data')
     return render_template("home.html")
 
 
