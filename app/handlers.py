@@ -1,7 +1,6 @@
 from .services import get_db_connection
-import json
-from bson.objectid import ObjectId
 from .models import Company
+from .data_handlers import clean_company_name
 
 
 # Get data from SQLite Database
@@ -48,7 +47,7 @@ def add_data(all_companies):
     for c in companies:
         company = Company()
         # company.id = c['id']
-        company.name = c['name']
+        company.name = clean_company_name(c['name'])
         company.country_iso = c['country_iso']
         company.city = c['city']
         company.nace = c['nace']
