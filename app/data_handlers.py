@@ -28,6 +28,7 @@ def clean_company_name(company_name):
     pattern = r"[\(].*?[\)]"
     matches = re.findall(pattern, text)
 
+    # Remove text after ","
     if ',' in text:
         text = text.split(',')
         text = text[0]
@@ -36,6 +37,7 @@ def clean_company_name(company_name):
         for i in matches:
             text = text.replace(i, '')
 
+    # Remove word like "LDT", "LTD.", "Limited" etc.
     for j in strings_forbidden:
         text = text.replace(j, '')
 
