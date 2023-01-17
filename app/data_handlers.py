@@ -1,5 +1,4 @@
 import re
-# from cleanco import basename
 
 
 def name_upper_case(text):
@@ -23,17 +22,16 @@ def clean_company_name(company_name):
     strings_forbidden = ['LIMITED', 'LTD.', 'LTD', 'ltd.', 'Limited', 'limited', 'Ltd', 'Ltd.']
     text = company_name
 
-    # text = ' This -is - sentence. (of course is not legal) to - "doubt" me-, in this time-line-. But (response of
-    # the http is not posible) now, '
-    pattern = r"[\(].*?[\)]"
-    matches = re.findall(pattern, text)
-
     # Remove text after ","
     if ',' in text:
         text = text.split(',')
         text = text[0]
 
     if '(' in text:
+        # Pattern to remove everything between ()
+        pattern = r"[\(].*?[\)]"
+        matches = re.findall(pattern, text)
+
         for i in matches:
             text = text.replace(i, '')
 
@@ -64,10 +62,7 @@ def clean_company_name(company_name):
     # Remove blank spaces
     text = text.strip()
 
+    # Capitalize word in name
     name = name_upper_case(text)
-
-    # Not work error terms missing pos.args
-    # name = "Some Big Pharma, LLC"
-    # name = basename(name)
 
     return name

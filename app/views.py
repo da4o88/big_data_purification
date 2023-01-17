@@ -1,6 +1,5 @@
-from flask import render_template, redirect, request, jsonify, url_for, Response
-from flask_paginate import Pagination, get_page_args, get_page_parameter
-# from .handlers import get_companies, get_total_companies, get_raw_data, add_data, show_company_data
+from flask import render_template, redirect, request
+from flask_paginate import Pagination, get_page_parameter
 from .handlers import *
 from .models import Company
 from app import app
@@ -10,23 +9,17 @@ from app import app
 
 
 @app.route('/', methods=["GET", "POST"])
-def home():  # put application's code here
+def home():
     if request.method == "POST" and request.form.get("btn-home-migrate"):
         return redirect('raw-data')
     return render_template("home.html")
-
-
-# @app.route('/modal')
-# def modal():  # put application's code here
-#
-#     return render_template("modal.html")
 
 
 @app.route('/show-data', methods=["GET", "POST"])
 def show_data():
     companies = show_company_data()
     records = len(Company.objects)
-    records_flag = False
+
     # Check if DB is empty
     if request.method == "GET" and records == 0:
         records_flag = True
@@ -52,7 +45,6 @@ def show_data():
                            pagination=pagination,
                            page=page,
                            per_page=per_page,
-                           # pagination_companies=pagination_companies
                            )
 
 
@@ -67,13 +59,8 @@ def show_raw_data():
 
     if request.method == "POST" and request.form.get("btn-migrate"):
         add_data(companies)
-        btn_migrate_flag = True
         return redirect('show-data')
 
-    # Working just fine
-    # if request.method == "POST" and request.form.get("btn-migrate"):
-    #     add_data()
-    #     return redirect('show-data')
 
     # Set Pagination
 

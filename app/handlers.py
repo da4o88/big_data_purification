@@ -21,7 +21,6 @@ def get_total_companies(companies, offset=0, per_page=10):
 
 def get_companies(companies):
     new_companies = []
-    # companies = get_raw_data()
 
     for c in companies:
         company = {

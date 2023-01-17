@@ -5,15 +5,7 @@
             <h1>Raw Data</h1>
             <form action="/raw-data" method="POST">
                 <input type="submit" value="Migrate Data" class="btn btn-success" name="btn-migrate">
-
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Launch demo modal
-                </button>
             </form>
-
-
-
         </div>
         <br/>
         <div class="container data-display-background">
@@ -50,8 +42,4 @@
             {{ pagination.links }}
         </div>
     </div>
-
-    <!-- Pop Up Modal Window -->
-    {% include 'modal.html' %}
-
 {% endblock %}
