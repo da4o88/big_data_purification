@@ -8,7 +8,8 @@ from .data_handlers import clean_company_name
 
 def get_raw_data():
     conn = get_db_connection()
-    companies_from_db = conn.execute('SELECT * FROM "companies"').fetchall()
+    cursor = conn.cursor()
+    companies_from_db = cursor.execute('SELECT * FROM "companies"').fetchall()
     # Get number of rows in table
     # count = conn.execute('SELECT COUNT(*) FROM companies').fetchone()[0]
     conn.close()
@@ -19,27 +20,28 @@ def get_total_companies(companies, offset=0, per_page=10):
     return companies[offset: offset + per_page]
 
 
-def get_companies(companies):
-    new_companies = []
-
-    for c in companies:
-        company = {
-            "id": c['id'],
-            "name": c['name'],
-            "country_iso": c['country_iso'],
-            "city": c['city'],
-            "nace": c['nace'],
-            "website": c['website']
-        }
-        new_companies.append(company)
-    return new_companies
+# def get_companies(companies):
+#     new_companies = []
+#
+#     for c in companies:
+#         company = {
+#             "id": c['id'],
+#             "name": c['name'],
+#             "country_iso": c['country_iso'],
+#             "city": c['city'],
+#             "nace": c['nace'],
+#             "website": c['website']
+#         }
+#         new_companies.append(company)
+#     return new_companies
 
 
 # <-- Work With MongoDB -->
 # Add data to MongoDB
 
-def add_data(all_companies):
-    companies = get_companies(all_companies)
+def add_data():
+    # companies = get_companies(all_companies)
+    companies = get_raw_data()
 
     # Insert data in Mongo DB
 
@@ -63,7 +65,7 @@ def show_company_data():
 
     return output
 
-# Delete Data in DB
+# Delete Data in Mongo DB
 
 
 def delete_all_data():

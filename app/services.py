@@ -7,6 +7,7 @@ from flask_mongoengine import MongoEngine
 
 def get_db_connection():
     conn = sqlite3.connect('data.db')
+    # Return Memory Location of Objects, without return dictionary
     conn.row_factory = sqlite3.Row
     return conn
 

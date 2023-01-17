@@ -58,7 +58,7 @@ def show_raw_data():
     btn_migrate_flag = False
 
     if request.method == "POST" and request.form.get("btn-migrate"):
-        add_data(companies)
+        add_data()
         return redirect('show-data')
 
 
