@@ -16,14 +16,14 @@ def get_db_connection():
 
 # Connect to MongoDB
 
-app.config['MONGODB_SETTINGS'] = {
-    'db': 'company_db',
-    'host': 'localhost',
-    'port': 27017
-}
-
-db = MongoEngine()
-db.init_app(app)
+# app.config['MONGODB_SETTINGS'] = {
+#     'db': 'company_db',
+#     'host': 'localhost',
+#     'port': 27017
+# }
+#
+# db = MongoEngine()
+# db.init_app(app)
 
 
 

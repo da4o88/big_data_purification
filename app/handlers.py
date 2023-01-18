@@ -1,6 +1,6 @@
 from .data_handlers import clean_company_name
 from .services import get_db_connection, list_coll
-from .models import Company
+# from .models import Company
 from mongoengine import *
 
 
@@ -66,24 +66,38 @@ def insert_data_to_db():
         }
         list_coll.insert_one(company)
 
+# Get All Data from MongoDB
+
+
+def get_all_mongo_data():
+    data = list(list_coll.find({}))
+    # print(data)
+    return data
+
+
+def count_all_records():
+    records = list_coll.count_documents({})
+    return records
+
+
 # MongoEngine
 
 
-def show_company_data():
-    output = []
-    companies = Company.objects
-
-    for comp in companies:
-        output.append(comp)
-
-    return output
-
-
-def delete_all_data():
-    companies = Company.objects
-
-    for company in companies:
-        company.delete()
+# def show_company_data():
+#     output = []
+#     companies = Company.objects
+#
+#     for comp in companies:
+#         output.append(comp)
+#
+#     return output
+#
+#
+# def delete_all_data():
+#     companies = Company.objects
+#
+#     for company in companies:
+#         company.delete()
 
 
 #

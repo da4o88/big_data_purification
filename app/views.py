@@ -1,6 +1,6 @@
 import requests
 from flask_paginate import get_page_parameter, Pagination
-from .models import Company
+# from .models import Company
 from .handlers import *
 from app import app
 from flask import Flask, request, render_template, redirect, url_for
@@ -53,11 +53,10 @@ def show_raw_data():
                            )
 
 
-
 @app.route('/show-data', methods=["GET", "POST"])
 def show_data():
-    companies = show_company_data()
-    records = len(Company.objects)
+    companies = get_all_mongo_data()
+    records = count_all_records()
 
     # Check if DB is empty
     if request.method == "GET" and records == 0:
@@ -65,7 +64,7 @@ def show_data():
         return render_template('show_data.html', records_flag=records_flag)
 
     if request.method == "POST" and request.form.get("btn-delete-all-records"):
-        delete_all_data()
+        # delete_all_data()
         records_flag = True
         return render_template('show_data.html', records_flag=records_flag)
 
