@@ -1,6 +1,7 @@
 body {
     /*background: #f4f4f4*/
     background-image: url("../img/background_img.jpg");
+    width: 100%;
 }
 
 #footer {
