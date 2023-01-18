@@ -7,12 +7,10 @@ from app import app
 
 # Create routes for app
 
-
-@app.route('/', methods=["GET", "POST"])
-def home():
-    if request.method == "POST" and request.form.get("btn-home-migrate"):
-        return redirect('raw-data')
-    return render_template("home.html")
+@app.route('/api', methods=["POST"])
+def migrate_data():
+    add_data()
+    return redirect('show-data')
 
 
 @app.route('/show-data', methods=["GET", "POST"])
@@ -48,18 +46,17 @@ def show_data():
                            )
 
 
-@app.route('/raw-data', methods=["POST", "GET"])
+@app.route('/raw-data', methods=["GET"])
 def show_raw_data():
     # Data from Database
     companies = get_raw_data()
 
-    # companies = get_companies()  # list
     total = len(companies)  # length of list
     btn_migrate_flag = False
 
-    if request.method == "POST" and request.form.get("btn-migrate"):
-        add_data()
-        return redirect('show-data')
+    # if request.method == "POST" and request.form.get("btn-migrate"):
+    #     add_data()
+    #     return redirect('show-data')
 
 
     # Set Pagination
@@ -79,3 +76,10 @@ def show_raw_data():
                            pagination=pagination,
                            btn_migrate_flag=btn_migrate_flag,
                            )
+
+
+@app.route('/', methods=["GET", "POST"])
+def home():
+    if request.method == "POST" and request.form.get("btn-home-migrate"):
+        return redirect('raw-data')
+    return render_template("home.html")
