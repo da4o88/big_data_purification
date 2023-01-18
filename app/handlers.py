@@ -1,7 +1,5 @@
 from .data_handlers import clean_company_name
 from .services import get_db_connection, list_coll
-# from .models import Company
-from mongoengine import *
 
 
 # Get data from SQLite Database
@@ -71,7 +69,6 @@ def insert_data_to_db():
 
 def get_all_mongo_data():
     data = list(list_coll.find({}))
-    # print(data)
     return data
 
 
@@ -80,61 +77,5 @@ def count_all_records():
     return records
 
 
-# MongoEngine
-
-
-# def show_company_data():
-#     output = []
-#     companies = Company.objects
-#
-#     for comp in companies:
-#         output.append(comp)
-#
-#     return output
-#
-#
-# def delete_all_data():
-#     companies = Company.objects
-#
-#     for company in companies:
-#         company.delete()
-
-
-#
-# # MongoEngine
-# # Add data to MongoDB
-#
-# def add_data():
-#     # companies = get_companies(all_companies)
-#     companies = get_raw_data()
-#
-#     # Insert data in Mongo DB
-#
-#     for c in companies:
-#         company = Company()
-#         # company.id = c['id']
-#         company.name = clean_company_name(c['name'])
-#         company.country_iso = c['country_iso']
-#         company.city = c['city']
-#         company.nace = c['nace']
-#         company.website = c['website']
-#         company.save()
-#
-#
-# def show_company_data():
-#     output = []
-#     companies = Company.objects
-#
-#     for comp in companies:
-#         output.append(comp)
-#
-#     return output
-#
-# # Delete Data in Mongo DB
-#
-#
-# def delete_all_data():
-#     companies = Company.objects
-#
-#     for company in companies:
-#         company.delete()
+def delete_all_data():
+    list_coll.delete_many({})

@@ -1,8 +1,5 @@
 import sqlite3
 import pymongo
-from app import app
-from flask_mongoengine import MongoEngine
-from mongoengine import connect
 
 # Connect to SQLite Database
 
@@ -12,19 +9,6 @@ def get_db_connection():
     # Return Memory Location of Objects, without return dictionary
     conn.row_factory = sqlite3.Row
     return conn
-
-
-# Connect to MongoDB
-
-# app.config['MONGODB_SETTINGS'] = {
-#     'db': 'company_db',
-#     'host': 'localhost',
-#     'port': 27017
-# }
-#
-# db = MongoEngine()
-# db.init_app(app)
-
 
 
 # Connect to MongoDB with pymongo
@@ -42,5 +26,3 @@ if "companies" in list_collections:
     print("The collection exists.")
 else:
     print("Collection doesn't exists.")
-
-

@@ -1,9 +1,8 @@
 import requests
 from flask_paginate import get_page_parameter, Pagination
-# from .models import Company
 from .handlers import *
 from app import app
-from flask import Flask, request, render_template, redirect, url_for
+from flask import request, render_template, redirect
 
 
 # Create routes for app
@@ -11,6 +10,7 @@ from flask import Flask, request, render_template, redirect, url_for
 def get_data():
     data = get_db_data()
     return data
+
 
 @app.route('/api/insert-data')
 def insert_data():
@@ -64,7 +64,7 @@ def show_data():
         return render_template('show_data.html', records_flag=records_flag)
 
     if request.method == "POST" and request.form.get("btn-delete-all-records"):
-        # delete_all_data()
+        delete_all_data()
         records_flag = True
         return render_template('show_data.html', records_flag=records_flag)
 
