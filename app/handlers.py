@@ -1,7 +1,7 @@
-from flask import jsonify
-from .services import get_db_connection
-# from .models import Company
-# from .data_handlers import clean_company_name
+from .data_handlers import clean_company_name
+from .services import get_db_connection, list_coll
+from .models import Company
+from mongoengine import *
 
 
 # Get data from SQLite Database
@@ -9,8 +9,9 @@ from .services import get_db_connection
 
 def get_raw_data():
     conn = get_db_connection()
+
     cursor = conn.cursor()
-    companies_from_db = cursor.execute('SELECT * FROM "companies"').fetchall()
+    companies_from_db = cursor.execute('SELECT * FROM companies').fetchall()
     # Get number of rows in table
     # count = conn.execute('SELECT COUNT(*) FROM companies').fetchone()[0]
     conn.close()
@@ -18,8 +19,8 @@ def get_raw_data():
     return companies_from_db
 
 
-# def get_total_companies(companies, offset=0, per_page=10):
-#     return companies[offset: offset + per_page]
+def get_total_companies(companies, offset=0, per_page=10):
+    return companies[offset: offset + per_page]
 
 
 def get_companies(companies):
@@ -49,10 +50,40 @@ def get_db_data():
     return result
 
 
-
 # <-- Work With MongoDB -->
+# pymongo
+
+def insert_data_to_db():
+    companies = get_db_data()
+
+    for i in range(len(companies)):
+        company = {
+            "name": clean_company_name(companies[i]["name"]),
+            "country_iso": companies[i]["country_iso"],
+            "city": companies[i]["city"],
+            "nace": companies[i]["nace"],
+            "website": companies[i]["website"],
+        }
+        list_coll.insert_one(company)
+
+# MongoEngine
 
 
+def show_company_data():
+    output = []
+    companies = Company.objects
+
+    for comp in companies:
+        output.append(comp)
+
+    return output
+
+
+def delete_all_data():
+    companies = Company.objects
+
+    for company in companies:
+        company.delete()
 
 
 #

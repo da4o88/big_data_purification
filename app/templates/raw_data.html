@@ -3,7 +3,7 @@
     <div>
         <div>
             <h1>Raw Data</h1>
-            <form action="/api" method="POST">
+            <form action="/api/insert-data" method="POST">
                 <input type="submit" value="Migrate Data" class="btn btn-success" name="btn-migrate">
             </form>
         </div>
@@ -25,6 +25,7 @@
                         </tr>
                       </thead>
                       <tbody class="table-group-divider">
+
 
                       {% for company in pagination_companies %}
                         <tr>

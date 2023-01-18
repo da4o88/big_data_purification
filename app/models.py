@@ -1,6 +1,5 @@
 import mongoengine as me
 
-
 class Company(me.Document):
     # id = me.StringField()
     name = me.StringField(required=True)

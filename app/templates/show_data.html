@@ -20,7 +20,7 @@
         <br/>
         <div class="container data-display-background">
             <div>
-                {{ pagination.links }}
+{#                {{ pagination.links }}#}
             </div>
 
                 <div class="table-responsive">
@@ -40,7 +40,8 @@
 
                       {% for company in companies %}
                         <tr>
-                          <th scope="row">{{ loop.index + (page - 1) * per_page }}</th>
+{#                          <th scope="row">{{ loop.index + (page - 1) * per_page }}</th>#}
+                          <th scope="row">{{ loop.index }}</th>
                           <td>{{ company.name }}</td>
                           <td>{{ company.country_iso }}</td>
                           <td>{{ company.city }}</td>
@@ -51,7 +52,7 @@
                     {% endfor %}
                 </table>
                 </div>
-            {{ pagination.links }}
-        </div>
+{#            {{ pagination.links }}#}
+{#        </div>#}
     {% endif %}
 {% endblock %}
