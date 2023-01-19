@@ -1,5 +1,4 @@
 import json
-
 import requests
 from flask_paginate import get_page_parameter, Pagination
 from .handlers import *
@@ -35,11 +34,9 @@ def show_raw_data():
     if request.method == "POST" and request.form.get("btn-migrate"):
         url = "http://127.0.0.1:5000//api/insert-data"
         request_api = requests.post(url, data=json.dumps(data))
-        print(request_api.status_code)
+        # print(request_api.status_code)
         if request_api.status_code == 200:
             return redirect('show-data')
-
-
 
     # Set Pagination
 
@@ -101,5 +98,4 @@ def home():
 
         if request_api.status_code == 200:
             return redirect('raw-data')
-
     return render_template("home.html")

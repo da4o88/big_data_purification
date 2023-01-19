@@ -18,7 +18,7 @@ db = client["company_db"]
 
 # Create collection
 list_coll = db["companies"]
-print(db.list_collection_names())
+# print(db.list_collection_names())
 
 # Check if collection exists
 list_collections = db.list_collection_names()
