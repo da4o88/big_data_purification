@@ -1,52 +1,17 @@
-import json
 import requests
 from flask_paginate import get_page_parameter, Pagination
 from .handlers import *
 from app import app
 from flask import request, render_template, redirect, jsonify, url_for
 
+# Variable to get data from sqlite database
 company_data = []
 
-
-
 # Create routes for app
-
-# companies = [{"city": 'null',
-#               "country_iso": "UK",
-#               "id": 20000,
-#               "nace": 8621,
-#               "name": "THE BLOOMFIELD CLINIC LTD",
-#               "website": "https://www.thebloomfieldclinic.co.uk"}]
-
-# @app.route('/companies', methods=["GET"])
-# def return_all_companies():
-#     return jsonify({'companies': companies})
-
-
-# @app.route('/companies', methods=["POST"])
-# def add_one():
-#     company = {"city": request.json['city'],
-#               "country_iso": request.json['country_iso'],
-#               "id": request.json['id'],
-#               "nace": request.json['nace'],
-#               "name": request.json['name'],
-#               "website": request.json['website']}
-#     # companies.append(company)
-#     insert_data_to_db(company)
-#     return jsonify({'companies': companies})
 
 
 @app.route('/api/insert-data', methods=["POST"])
 def insert_data_db():
-    # company = {"city": request.json['city'],
-    #           "country_iso": request.json['country_iso'],
-    #           "id": request.json['id'],
-    #           "nace": request.json['nace'],
-    #           "name": request.json['name'],
-    #           "website": request.json['website']}
-    # companies.append(company)
-    # return jsonify({'companies': companies})
-    # No return in function only to insert data
     result = insert_data_to_db(company_data)
     if result:
         return redirect(url_for('show_data'))
@@ -62,18 +27,23 @@ def get_data():
 
 @app.route('/raw-data', methods=["POST", "GET"])
 def show_raw_data():
+    global company_data
+    company_data_length = len(company_data)
+
     # Data from Database
     companies = get_raw_data()
-
     total = len(companies)  # length of list
     btn_migrate_flag = False
 
-    data = get_db_data()
-    data = json.dumps(data, indent=0)
-    # print(data)
+    # Check if company has any data
+    if request.method == "GET" and company_data_length == 0:
+        url = "http://127.0.0.1:5000/api/get-data"
+        request_api = requests.get(url)
+        company_data = request_api.json()
+
     # Clicked on button Migrate Data
     if request.method == "POST" and request.form.get("btn-migrate"):
-        url = "http://127.0.0.1:5000//api/insert-data/"
+        url = "http://127.0.0.1:5000/api/insert-data/"
         requests.post(url)
         # request_api = requests.post(url)
 
@@ -139,4 +109,5 @@ def home():
 
         if request_api.status_code == 200:
             return redirect('raw-data')
+
     return render_template("home.html")

@@ -19,6 +19,7 @@ def name_upper_case(text):
 
 
 def clean_company_name(company_name):
+    """Clean company name from unnecessary words like ('LIMITED', 'LTD.', 'LTD') etc. Return string variable"""
     strings_forbidden = ['LIMITED', 'LTD.', 'LTD', 'ltd.', 'Limited', 'limited', 'Ltd', 'Ltd.']
     text = company_name
 
@@ -39,7 +40,6 @@ def clean_company_name(company_name):
     for j in strings_forbidden:
         text = text.replace(j, '')
 
-    #  "" i  - uslov za proverka, konsultacija
     if '"' in text:
         for ch in text:
             if ch == '"':

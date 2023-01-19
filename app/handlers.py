@@ -24,21 +24,6 @@ def get_total_companies(companies, offset=0, per_page=10):
 
 
 def get_companies(companies):
-    # new_companies = {}
-    #
-    # for c in companies:
-    #     name = c['name']
-    #     company = {
-    #             "id": c['id'],
-    #             "country_iso": c['country_iso'],
-    #             "city": c['city'],
-    #             "nace": c['nace'],
-    #             "website": c['website']
-    #         }
-    #     new_companies[name] = company
-    # # print(new_companies)
-    # return new_companies
-
     new_companies = []
 
     for c in companies:
@@ -66,9 +51,9 @@ def get_db_data():
 
 
 # <-- Work With MongoDB -->
-# pymongo
-# Insert data into Mongo DB
+# Query data with pymongo
 
+# Insert data into Mongo DB
 def insert_data_to_db(companies):
     data_records = len(companies)
 
@@ -89,8 +74,6 @@ def insert_data_to_db(companies):
 
 
 # Get All Data from MongoDB
-
-
 def get_all_mongo_data():
     data = list(list_coll.find({}))
     return data
@@ -101,5 +84,6 @@ def count_all_records():
     return records
 
 
+# Delete all data from mongo database
 def delete_all_data():
     list_coll.delete_many({})
