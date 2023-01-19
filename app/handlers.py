@@ -1,3 +1,5 @@
+from flask import jsonify
+
 from .data_handlers import clean_company_name
 from .services import get_db_connection, list_coll
 
@@ -22,6 +24,21 @@ def get_total_companies(companies, offset=0, per_page=10):
 
 
 def get_companies(companies):
+    # new_companies = {}
+    #
+    # for c in companies:
+    #     name = c['name']
+    #     company = {
+    #             "id": c['id'],
+    #             "country_iso": c['country_iso'],
+    #             "city": c['city'],
+    #             "nace": c['nace'],
+    #             "website": c['website']
+    #         }
+    #     new_companies[name] = company
+    # # print(new_companies)
+    # return new_companies
+
     new_companies = []
 
     for c in companies:
@@ -50,19 +67,26 @@ def get_db_data():
 
 # <-- Work With MongoDB -->
 # pymongo
+# Insert data into Mongo DB
 
 def insert_data_to_db(companies):
-    # companies = get_db_data()
+    data_records = len(companies)
 
-    for i in range(len(companies)):
+    for i in range(data_records):
+        name = companies[i]["name"]
+        name = clean_company_name(name)
         company = {
-            "name": clean_company_name(companies[i]["name"]),
-            "country_iso": companies[i]["country_iso"],
-            "city": companies[i]["city"],
-            "nace": companies[i]["nace"],
-            "website": companies[i]["website"],
+            name: {
+                "country_iso": companies[i]["country_iso"],
+                "city": companies[i]["city"],
+                "nace": companies[i]["nace"],
+                "website": companies[i]["website"],
+            }
         }
         list_coll.insert_one(company)
+    else:
+        return True
+
 
 # Get All Data from MongoDB
 
