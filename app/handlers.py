@@ -51,8 +51,8 @@ def get_db_data():
 # <-- Work With MongoDB -->
 # pymongo
 
-def insert_data_to_db():
-    companies = get_db_data()
+def insert_data_to_db(companies):
+    # companies = get_db_data()
 
     for i in range(len(companies)):
         company = {

@@ -22,7 +22,7 @@ print(db.list_collection_names())
 
 # Check if collection exists
 list_collections = db.list_collection_names()
-if "companies" in list_collections:
-    print("The collection exists.")
-else:
-    print("Collection doesn't exists.")
+# if "companies" in list_collections:
+#     print("The collection exists.")
+# else:
+#     print("Collection doesn't exists.")

@@ -1,8 +1,10 @@
+import json
+
 import requests
 from flask_paginate import get_page_parameter, Pagination
 from .handlers import *
 from app import app
-from flask import request, render_template, redirect
+from flask import request, render_template, redirect, jsonify
 
 
 # Create routes for app
@@ -12,27 +14,32 @@ def get_data():
     return data
 
 
-@app.route('/api/insert-data')
-def insert_data():
-    insert_data_to_db()
+@app.route('/api/insert-data/<data>', methods=["POST"])
+def insert_data_db(data):
+    insert_data_to_db(data)
     return "Done"
 
 
 @app.route('/raw-data', methods=["POST", "GET"])
 def show_raw_data():
-    # Clicked on button Migrate Data
-    if request.method == "POST" and request.form.get("btn-migrate"):
-        url = "http://127.0.0.1:5000//api/insert-data"
-        request_api = requests.get(url)
-
-        if request_api.status_code == 200:
-            return redirect('show-data')
-
     # Data from Database
     companies = get_raw_data()
 
     total = len(companies)  # length of list
     btn_migrate_flag = False
+
+    data = get_db_data()
+    data = json.dumps(data, indent=0)
+    # print(data)
+    # Clicked on button Migrate Data
+    if request.method == "POST" and request.form.get("btn-migrate"):
+        url = "http://127.0.0.1:5000//api/insert-data"
+        request_api = requests.post(url, data=json.dumps(data))
+        print(request_api.status_code)
+        if request_api.status_code == 200:
+            return redirect('show-data')
+
+
 
     # Set Pagination
 
