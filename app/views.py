@@ -47,17 +47,10 @@ def show_raw_data():
     if request.method == "POST" and request.form.get("btn-migrate"):
         url = "http://127.0.0.1:5000/api/insert-data"
 
-        # # Get data from DB
-        # # data = get_db_data()
-        # url_get_data = "http://127.0.0.1:5000/api/get-data"
-        # data = requests.get(url_get_data)
-        # # print(data)
-
         # Convert Python type None into null for json format
         # data_json = json.dumps(data)
-
-
         # r = requests.post(url, data=data_json)
+
         r = requests.post(url, data=data)
 
         if r.status_code == 200:
