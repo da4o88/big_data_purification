@@ -1,5 +1,3 @@
-from flask import jsonify
-
 from .data_handlers import clean_company_name
 from .services import get_db_connection, list_coll
 
@@ -35,17 +33,17 @@ def get_companies(companies):
             "nace": c['nace'],
             "website": c['website']
         }
-        new_companies.append(company)
 
+        new_companies.append(company)
     return new_companies
 
 
 def get_db_data():
     # Get data from DB
     companies = get_raw_data()
-
-    # Return list of dictionaries
+    # print(companies)
     result = get_companies(companies)
+    # print(result)
 
     return result
 
@@ -62,6 +60,7 @@ def insert_data_to_db(companies):
         name = clean_company_name(name)
         company = {
             name: {
+                "id_sqlite": companies[i]["id"],
                 "country_iso": companies[i]["country_iso"],
                 "city": companies[i]["city"],
                 "nace": companies[i]["nace"],

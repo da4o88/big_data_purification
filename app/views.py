@@ -1,51 +1,67 @@
 import requests
+import json
 from flask_paginate import get_page_parameter, Pagination
 from .handlers import *
 from app import app
 from flask import request, render_template, redirect, jsonify, url_for
 
-# Variable to get data from sqlite database
-company_data = []
+# # Variable to get data from sqlite database
+# company_data = []
+
 
 # Create routes for app
 
 
 @app.route('/api/insert-data', methods=["POST"])
 def insert_data_db():
-    result = insert_data_to_db(company_data)
+    received_data = request.data
+    # print(received_data)
+    # Convert Python type null into None
+    data = json.loads(received_data)
+    result = insert_data_to_db(data)
+
     if result:
-        return redirect(url_for('show_data'))
+        response = '200'
     else:
-        return "Something went wrong. Check your database!!!"
+        response = '500'
+    return response
 
 
 @app.route('/api/get-data', methods=["GET"])
 def get_data():
     data = get_db_data()
-    return jsonify(data)
+    print(data)
+    # return jsonify(data)
+    return data
 
 
 @app.route('/raw-data', methods=["POST", "GET"])
 def show_raw_data():
-    global company_data
-    company_data_length = len(company_data)
 
     # Data from Database
     companies = get_raw_data()
     total = len(companies)  # length of list
     btn_migrate_flag = False
 
-    # Check if company has any data
-    if request.method == "GET" and company_data_length == 0:
-        url = "http://127.0.0.1:5000/api/get-data"
-        request_api = requests.get(url)
-        company_data = request_api.json()
-
     # Clicked on button Migrate Data
     if request.method == "POST" and request.form.get("btn-migrate"):
-        url = "http://127.0.0.1:5000/api/insert-data/"
-        requests.post(url)
-        # request_api = requests.post(url)
+        url = "http://127.0.0.1:5000/api/insert-data"
+
+        # Get data from DB
+        # data = get_db_data()
+        url_get_data = "http://127.0.0.1:5000/api/get-data"
+        data = requests.get(url_get_data)
+        # print(data)
+
+        # Convert Python type None into null for json format
+        # data_json = json.dumps(data)
+
+
+        # r = requests.post(url, data=data_json)
+        r = requests.post(url, data=data)
+
+        if r.status_code == 200:
+            return redirect('show-data')
 
     # Set Pagination
 
@@ -101,11 +117,11 @@ def show_data():
 
 @app.route('/', methods=["GET", "POST"])
 def home():
-    global company_data
+
     if request.method == "POST" and request.form.get("btn-home-migrate"):
         url = "http://127.0.0.1:5000/api/get-data"
         request_api = requests.get(url)
-        company_data = request_api.json()
+        # company_data = request_api.json()
 
         if request_api.status_code == 200:
             return redirect('raw-data')
