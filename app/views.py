@@ -5,19 +5,16 @@ from .handlers import *
 from app import app
 from flask import request, render_template, redirect, jsonify, url_for
 
-# # Variable to get data from sqlite database
-# company_data = []
-
-
 # Create routes for app
 
 
 @app.route('/api/insert-data', methods=["POST"])
 def insert_data_db():
     received_data = request.data
-    # print(received_data)
+    # print(received_data) # 'city': null
     # Convert Python type null into None
     data = json.loads(received_data)
+    # print(data) # 'city': None
     result = insert_data_to_db(data)
 
     if result:
@@ -30,13 +27,16 @@ def insert_data_db():
 @app.route('/api/get-data', methods=["GET"])
 def get_data():
     data = get_db_data()
-    print(data)
     # return jsonify(data)
     return data
 
 
 @app.route('/raw-data', methods=["POST", "GET"])
 def show_raw_data():
+    # Get data from DB
+    url_get_data = "http://127.0.0.1:5000/api/get-data"
+    data = requests.get(url_get_data)
+    # print(data.json())
 
     # Data from Database
     companies = get_raw_data()
@@ -47,11 +47,11 @@ def show_raw_data():
     if request.method == "POST" and request.form.get("btn-migrate"):
         url = "http://127.0.0.1:5000/api/insert-data"
 
-        # Get data from DB
-        # data = get_db_data()
-        url_get_data = "http://127.0.0.1:5000/api/get-data"
-        data = requests.get(url_get_data)
-        # print(data)
+        # # Get data from DB
+        # # data = get_db_data()
+        # url_get_data = "http://127.0.0.1:5000/api/get-data"
+        # data = requests.get(url_get_data)
+        # # print(data)
 
         # Convert Python type None into null for json format
         # data_json = json.dumps(data)
@@ -117,13 +117,6 @@ def show_data():
 
 @app.route('/', methods=["GET", "POST"])
 def home():
-
     if request.method == "POST" and request.form.get("btn-home-migrate"):
-        url = "http://127.0.0.1:5000/api/get-data"
-        request_api = requests.get(url)
-        # company_data = request_api.json()
-
-        if request_api.status_code == 200:
-            return redirect('raw-data')
-
+        return redirect('raw-data')
     return render_template("home.html")
