@@ -6,6 +6,7 @@ from .services import get_db_connection, list_coll
 
 
 def get_raw_data():
+    """Function to get all data from sqlite database for table companies"""
     conn = get_db_connection()
 
     cursor = conn.cursor()
@@ -39,6 +40,7 @@ def get_companies(companies):
 
 
 def get_db_data():
+    """Get data from database and return list of dictionaries"""
     # Get data from DB
     companies = get_raw_data()
     # print(companies)
@@ -53,6 +55,7 @@ def get_db_data():
 
 # Insert data into Mongo DB
 def insert_data_to_db(companies):
+    """Insert data in mongo database, with modified names"""
     data_records = len(companies)
 
     for i in range(data_records):
@@ -79,6 +82,7 @@ def get_all_mongo_data():
 
 
 def count_all_records():
+    """Return number of total records in database table"""
     records = list_coll.count_documents({})
     return records
 

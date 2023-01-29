@@ -19,7 +19,7 @@ def name_upper_case(text):
 
 
 def clean_company_name(company_name):
-    """Clean company name from unnecessary words like ('LIMITED', 'LTD.', 'LTD') etc. Return string variable"""
+    """Clean company name from unnecessary words like ('LIMITED', 'LTD.', 'LTD') etc. Return string data"""
     strings_forbidden = ['LIMITED', 'LTD.', 'LTD', 'ltd.', 'Limited', 'limited', 'Ltd', 'Ltd.']
     text = company_name
 

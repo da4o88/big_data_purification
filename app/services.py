@@ -5,6 +5,7 @@ import pymongo
 
 
 def get_db_connection():
+    """Connect to sqlite database"""
     conn = sqlite3.connect('data.db')
     # Return Memory Location of Objects, without return dictionary
     conn.row_factory = sqlite3.Row
