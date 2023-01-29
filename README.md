@@ -1,5 +1,5 @@
 # Big Data Purification
-Big Data Purification is an Flask application which uses the ETL process, to extract data from SQLite database, which contains names of companies and additional information about them, make transformation on the names of companies and then load them in Mongo database.
+Big Data Purification is a Flask application which uses the ETL process, to extract data from SQLite database, which contains names of companies and additional information about them, make transformation on the names of companies and then load them in Mongo database.
 
 # Techologies
 
