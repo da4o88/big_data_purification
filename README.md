@@ -5,7 +5,7 @@ Flask app is consist of web application elements(HTML, CSS) and two API function
 # Additional Information
 
 - First API function is to read data from sqlite database and use GET method.
-- Second API function use POST method and make changes to the names (remove brackets and text inside them, capitalize the names of each company and etc.) and insert the modified data into mongo database.
+- Second API function use POST method and make changes to the names (remove brackets and text inside them, capitalize the names of each company and etc.) and insert the modified data into mongo database, where key is the name of the company and attributes are the additional information about company.
 
 
 # Techologies
