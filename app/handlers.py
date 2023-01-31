@@ -23,6 +23,11 @@ def get_total_companies(companies, offset=0, per_page=10):
 
 
 def get_companies(companies):
+    """
+
+    :param companies:
+    :return:
+    """
     new_companies = []
 
     for c in companies:

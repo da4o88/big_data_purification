@@ -2,7 +2,11 @@ import re
 
 
 def name_upper_case(text):
-    """Capitalize words in string names"""
+    """
+    Capitalize words in string names
+    :param text:
+    :return: string
+    """
 
     temp_text = text.split(' ')
     name = []
@@ -13,13 +17,21 @@ def name_upper_case(text):
         if '&' in word:
             word = word.upper()
 
+        if '.' in word:
+            word = word.upper()
+
         name.append(word)
     name = ' '.join(name)
     return name
 
 
 def clean_company_name(company_name):
-    """Clean company name from unnecessary words like ('LIMITED', 'LTD.', 'LTD') etc. Return string data"""
+    """
+    Clean company name from unnecessary words like ('LIMITED', 'LTD.', 'LTD') etc.
+    :param company_name:
+    :return: string
+    """
+
     strings_forbidden = ['LIMITED', 'LTD.', 'LTD', 'ltd.', 'Limited', 'limited', 'Ltd', 'Ltd.']
     text = company_name
 
