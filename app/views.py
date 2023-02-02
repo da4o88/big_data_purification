@@ -3,13 +3,17 @@ import json
 from flask_paginate import get_page_parameter, Pagination
 from .handlers import *
 from app import app
-from flask import request, render_template, redirect, jsonify, url_for
+from flask import request, render_template, redirect
 
 # Create routes for app
 
 
 @app.route('/api/insert-data', methods=["POST"])
 def insert_data_db():
+    """
+    Insert data into mongo database
+    :return:
+    """
     received_data = request.data
     # print(received_data) # 'city': null
     # Convert Python type null into None
@@ -26,6 +30,10 @@ def insert_data_db():
 
 @app.route('/api/get-data', methods=["GET"])
 def get_data():
+    """
+    Get data from sqlite database
+    :return: json data with list of dictionaries
+    """
     data = get_db_data()
     # return jsonify(data)
     return data
@@ -33,6 +41,10 @@ def get_data():
 
 @app.route('/raw-data', methods=["POST", "GET"])
 def show_raw_data():
+    """
+    Shows data from sqlite database
+    :return: redirect response to html file
+    """
     # Get data from DB
     url_get_data = "http://127.0.0.1:5000/api/get-data"
     data = requests.get(url_get_data)
@@ -77,6 +89,10 @@ def show_raw_data():
 
 @app.route('/show-data', methods=["GET", "POST"])
 def show_data():
+    """
+    Shows data from mongo database
+    :return: html template file
+    """
     companies = get_all_mongo_data()
     records = count_all_records()
 
