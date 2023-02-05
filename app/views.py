@@ -20,7 +20,6 @@ def insert_data_db():
     data = json.loads(received_data)
     # print(data) # 'city': None
     result = insert_data_to_db(data)
-
     if result:
         response = '200'
     else:
@@ -62,11 +61,12 @@ def show_raw_data():
         # Convert Python type None into null for json format
         # data_json = json.dumps(data)
         # r = requests.post(url, data=data_json)
-
         r = requests.post(url, data=data)
 
         if r.status_code == 200:
             return redirect('show-data')
+        elif r.status_code == 500:
+            return render_template('500.html')
 
     # Set Pagination
 
@@ -129,3 +129,4 @@ def home():
     if request.method == "POST" and request.form.get("btn-home-migrate"):
         return redirect('raw-data')
     return render_template("home.html")
+
