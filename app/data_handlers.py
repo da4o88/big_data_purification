@@ -69,6 +69,8 @@ def clean_company_name(company_name):
                         continue
                 temp_text += text[temp_index + 1:i]
                 temp_index = i
+            elif i == text_length - 1:
+                temp_text += text[temp_index + 1:]
         text = temp_text
 
     # Remove blank spaces
