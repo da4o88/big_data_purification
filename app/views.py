@@ -1,9 +1,14 @@
 import requests
 import json
+from datetime import datetime
 from flask_paginate import get_page_parameter, Pagination
 from .handlers import *
 from app import app
 from flask import request, render_template, redirect
+
+# Get current time
+now = datetime.now()
+current_year = now.year
 
 # Create routes for app
 
@@ -79,6 +84,7 @@ def show_raw_data():
     pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap5')
 
     return render_template("raw_data.html",
+                           current_year=current_year,
                            pagination_companies=pagination_companies,
                            page=page,
                            per_page=per_page,
@@ -99,12 +105,12 @@ def show_data():
     # Check if DB is empty
     if request.method == "GET" and records == 0:
         records_flag = True
-        return render_template('show_data.html', records_flag=records_flag)
+        return render_template('show_data.html', records_flag=records_flag, current_year=current_year,)
 
     if request.method == "POST" and request.form.get("btn-delete-all-records"):
         delete_all_data()
         records_flag = True
-        return render_template('show_data.html', records_flag=records_flag)
+        return render_template('show_data.html', records_flag=records_flag, current_year=current_year,)
 
     # Set Pagination
     page = request.args.get(get_page_parameter(), type=int, default=1)
@@ -116,6 +122,7 @@ def show_data():
     pagination = Pagination(page=page, per_page=per_page, total=records, css_framework='bootstrap5')
 
     return render_template("show_data.html",
+                           current_year=current_year,
                            records=records,
                            companies=pagination_companies,
                            pagination=pagination,
@@ -126,7 +133,8 @@ def show_data():
 
 @app.route('/', methods=["GET", "POST"])
 def home():
+
     if request.method == "POST" and request.form.get("btn-home-migrate"):
         return redirect('raw-data')
-    return render_template("home.html")
+    return render_template("home.html", current_year=current_year)
 
